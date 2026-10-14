@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="ext-resource-dependency" content="sounds/uhu.wav" data-resource-id="snd_uhu" />
+<meta name="ext-resource-dependency" content="sounds/specht.wav" data-resource-id="snd_specht" />
+<meta name="ext-resource-dependency" content="sounds/frosch.wav" data-resource-id="snd_frosch" />
+<meta name="ext-resource-dependency" content="sounds/igel.wav" data-resource-id="snd_igel" />
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#FFF6E6"><svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"><circle cx="200" cy="130" r="90" fill="#F28C28"/><text x="200" y="160" font-size="90" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-weight="700">I</text></svg></template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF6E6;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit}
+a{color:#2F7FB0}a:hover{color:#1F5F88}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+@keyframes toastIn{0%{transform:translate(-50%,40px) scale(.8);opacity:0}100%{transform:translate(-50%,0) scale(1);opacity:1}}
+@keyframes fly{0%{transform:translate(0,0) scale(1);opacity:1}80%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,140,40,.7)}50%{box-shadow:0 0 0 12px rgba(242,140,40,0)}}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <g id="igel">
+      <ellipse cx="190" cy="250" rx="150" ry="9" fill="#3B2A1E" opacity=".13"></ellipse>
+      <rect x="92" y="205" width="30" height="40" rx="13" fill="#B07A4F"></rect>
+      <rect x="132" y="208" width="30" height="38" rx="13" fill="#9A6A43"></rect>
+      <rect x="222" y="205" width="30" height="40" rx="13" fill="#B07A4F"></rect>
+      <rect x="258" y="208" width="30" height="38" rx="13" fill="#9A6A43"></rect>
+      <ellipse cx="107" cy="246" rx="19" ry="8" fill="#6B4426"></ellipse>
+      <ellipse cx="147" cy="246" rx="19" ry="8" fill="#5A3825"></ellipse>
+      <ellipse cx="237" cy="246" rx="19" ry="8" fill="#6B4426"></ellipse>
+      <ellipse cx="273" cy="246" rx="19" ry="8" fill="#5A3825"></ellipse>
+      <path d="M17 209 L41 195 L14 186 L40 176 L16 163 L44 157 L22 140 L51 139 L34 118 L63 123 L50 99 L78 108 L69 82 L95 96 L92 68 L116 86 L118 58 L138 80 L145 52 L161 76 L173 50 L185 76 L201 52 L208 80 L228 59 L230 87 L254 69 L250 96 L276 83 L268 109 L296 100 L282 124 L311 120 L293 140 L322 141 L300 200 L40 215 Z" fill="#5C3A22"></path>
+      <path d="M42 207 L63 195 L40 188 L62 180 L42 169 L65 164 L47 150 L72 149 L56 133 L81 135 L69 117 L93 123 L85 103 L107 113 L103 91 L124 104 L124 83 L142 98 L146 77 L160 95 L169 74 L180 94 L192 75 L199 96 L215 79 L218 100 L236 86 L235 107 L256 96 L251 117 L274 108 L264 128 L288 123 L275 141 L300 139 L300 205 L50 215 Z" fill="#8A5A33"></path>
+      <ellipse cx="172" cy="203" rx="132" ry="32" fill="#E2B27E"></ellipse>
+      <path d="M258 120 C305 110 342 150 361 182 C373 199 362 215 344 217 C318 223 288 227 258 222 C244 190 244 150 258 120 Z" fill="#EBC497"></path>
+      <circle cx="276" cy="124" r="13" fill="#E2B27E"></circle>
+      <circle cx="276" cy="124" r="6" fill="#C98E5E"></circle>
+      <circle cx="308" cy="158" r="9" fill="#2B1A10"></circle>
+      <circle cx="311" cy="155" r="3" fill="#FFFFFF"></circle>
+      <circle cx="320" cy="190" r="10" fill="#F4A3A3" opacity=".7"></circle>
+      <circle cx="362" cy="194" r="10" fill="#2B1A10"></circle>
+      <circle cx="365" cy="191" r="3" fill="#FFFFFF"></circle>
+      <path d="M336 206 Q344 214 353 207" fill="none" stroke="#2B1A10" style="stroke-width:3;stroke-linecap:round"></path>
+    </g>
+    <g id="szene">
+      <rect x="0" y="0" width="400" height="260" fill="#BFE6FF"></rect>
+      <circle cx="58" cy="48" r="30" fill="#FFD23F"></circle>
+      <ellipse cx="300" cy="44" rx="46" ry="16" fill="#FFFFFF"></ellipse>
+      <ellipse cx="330" cy="34" rx="30" ry="14" fill="#FFFFFF"></ellipse>
+      <rect x="0" y="200" width="400" height="60" fill="#7CC36A"></rect>
+      <circle cx="30" cy="232" r="8" fill="#E8508A"></circle>
+      <circle cx="380" cy="236" r="8" fill="#9B6BE0"></circle>
+      <circle cx="375" cy="110" r="14" fill="#E23B3B"></circle>
+      <rect x="373" y="90" width="4" height="10" fill="#5C3A22"></rect>
+      <use href="#igel"></use>
+    </g>
+  </defs>
+</svg>
+
+<div style="min-height:100vh;font-family:'Andika',system-ui,sans-serif;color:#3B2A1E;background:#FFF6E6;user-select:none;-webkit-user-select:none">
+
+  <header style="position:sticky;top:0;z-index:20;background:#FFF6E6;border-bottom:4px solid #F2DDB8;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg viewBox="0 0 400 260" style="width:84px;height:auto;display:block"><use href="#igel"></use></svg>
+      <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;color:#5C3A22;letter-spacing:.5px">Igel-Welt</div>
+    </div>
+    <nav style="display:flex;gap:12px">
+      <button onClick="{{ goInfo }}" style="display:flex;align-items:center;gap:10px;min-height:68px;padding:10px 26px;border-radius:22px;border:4px solid #F28C28;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;cursor:pointer;background:{{ navInfoBg }};color:{{ navInfoFg }}"><span style="font-size:32px">📖</span>Wissen</button>
+      <button onClick="{{ goGames }}" style="display:flex;align-items:center;gap:10px;min-height:68px;padding:10px 26px;border-radius:22px;border:4px solid #3FA7D6;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;cursor:pointer;background:{{ navGamesBg }};color:{{ navGamesFg }}"><span style="font-size:32px">🎲</span>Spiele</button>
+    </nav>
+  </header>
+
+  <main style="max-width:1100px;margin:0 auto;padding:24px 20px 80px">
+
+    <sc-if value="{{ isInfo }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.select }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 12px;min-height:150px;border-radius:28px;cursor:pointer;background:{{ t.bg }};border:5px solid {{ t.color }};transform:{{ t.tf }};transition:transform .2s;box-shadow:0 6px 0 {{ t.shadow }}">
+            <span style="font-size:64px;line-height:1">{{ t.icon }}</span>
+            <span style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:{{ t.fg }}">{{ t.title }}</span>
+          </button>
+        </sc-for>
+      </div>
+
+      <section style="background:#FFFFFF;border-radius:36px;padding:28px;border:5px solid {{ topic.color }};box-shadow:0 8px 0 {{ topic.shadow }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px">
+          <h1 style="margin:0;display:flex;align-items:center;gap:14px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:44px;color:{{ topic.color }}"><span style="font-size:60px">{{ topic.icon }}</span>{{ topic.title }}</h1>
+          <button onClick="{{ readTopic }}" style="display:flex;align-items:center;gap:10px;min-height:64px;padding:8px 24px;border-radius:999px;border:none;background:#FFC93C;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;cursor:pointer;box-shadow:0 5px 0 #D9A21A"><span style="font-size:30px">🔊</span>Vorlesen</button>
+        </div>
+
+        <sc-if value="{{ topicIsBody }}" hint-placeholder-val="{{ true }}">
+          <div style="position:relative;max-width:560px;margin:0 auto 20px;aspect-ratio:400/260">
+            <svg viewBox="0 0 400 260" style="width:100%;height:100%;display:block;animation:bob 3s ease-in-out infinite"><use href="#igel"></use></svg>
+            <sc-for list="{{ bodyLabels }}" as="z" hint-placeholder-count="4">
+              <div style="position:absolute;left:{{ z.left }};top:{{ z.top }};transform:translate(-50%,-50%);background:#FFFFFF;border:4px solid #F28C28;border-radius:999px;padding:4px 16px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;white-space:nowrap;box-shadow:0 3px 0 #D9701A">{{ z.text }}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ topic.rows }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.read }}" style="display:flex;align-items:center;gap:22px;text-align:left;padding:14px 20px;border-radius:24px;border:none;background:{{ topic.bg }};cursor:pointer;min-height:96px">
+              <span style="font-size:58px;line-height:1;min-width:90px;text-align:center;flex-shrink:0">{{ r.icon }}</span>
+              <span style="font-size:30px;line-height:1.35;text-wrap:pretty;flex:1">{{ r.text }}</span>
+              <span style="font-size:26px;opacity:.55;flex-shrink:0">🔊</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:24px">
+          <button onClick="{{ nextTopic }}" style="min-height:68px;padding:10px 30px;border-radius:999px;border:none;background:{{ topic.color }};color:#FFFFFF;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;cursor:pointer;box-shadow:0 5px 0 {{ topic.shadow }}">{{ nextLabel }}</button>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isMenu }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px">
+        <h1 style="margin:0;font-family:'Fredoka',sans-serif;font-weight:700;font-size:44px;color:#2F7FB0">Spiele</h1>
+        <div style="display:flex;align-items:center;gap:6px;background:#FFFFFF;border-radius:999px;padding:8px 20px;border:4px solid #FFC93C;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px">
+          <sc-for list="{{ starRow }}" as="s" hint-placeholder-count="6"><span style="font-size:30px;opacity:{{ s.op }}">⭐</span></sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px">
+        <sc-for list="{{ games }}" as="g" hint-placeholder-count="6">
+          <button onClick="{{ g.open }}" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 18px 22px;min-height:230px;border-radius:32px;border:5px solid {{ g.color }};background:{{ g.bg }};cursor:pointer;box-shadow:0 7px 0 {{ g.shadow }};text-align:center">
+            <span style="position:absolute;top:12px;right:14px;font-size:34px;opacity:{{ g.starOp }}">⭐</span>
+            <span style="font-size:76px;line-height:1">{{ g.icon }}</span>
+            <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:28px;color:{{ g.fg }}">{{ g.title }}</span>
+            <span style="font-size:21px;line-height:1.3">{{ g.desc }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ inGame }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px">
+        <button onClick="{{ backToMenu }}" style="display:flex;align-items:center;gap:8px;min-height:64px;padding:8px 22px;border-radius:999px;border:4px solid #3FA7D6;background:#FFFFFF;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;cursor:pointer"><span style="font-size:28px">⬅️</span>Zurück</button>
+        <h1 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:38px;color:{{ cur.fg }}"><span style="font-size:48px">{{ cur.icon }}</span>{{ cur.title }}</h1>
+      </div>
+      <button onClick="{{ readTask }}" style="display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:14px 22px;margin-bottom:22px;border-radius:24px;border:none;background:{{ cur.bg }};cursor:pointer;min-height:76px">
+        <span style="font-size:34px;flex-shrink:0">🔊</span>
+        <span style="font-size:28px;line-height:1.3;text-wrap:pretty">{{ cur.task }}</span>
+      </button>
+
+      <sc-if value="{{ g_body }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:26px">
+          <div style="position:relative;width:100%;max-width:680px;aspect-ratio:400/260;background:#FFFFFF;border-radius:32px;padding:0">
+            <svg viewBox="0 0 400 260" style="width:100%;height:100%;display:block"><use href="#igel"></use></svg>
+            <sc-for list="{{ bodyZones }}" as="z" hint-placeholder-count="4">
+              <div data-drop="{{ z.key }}" onClick="{{ z.onClick }}" style="position:absolute;left:{{ z.left }};top:{{ z.top }};transform:translate(-50%,-50%);min-width:84px;height:84px;padding:0 14px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ z.bg }};border:4px {{ z.borderStyle }} {{ z.borderColor }};font-family:'Fredoka',sans-serif;font-weight:600;font-size:{{ z.fs }};color:{{ z.fg }};animation:{{ z.anim }};white-space:nowrap">{{ z.content }}</div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px">
+            <sc-for list="{{ bodyChips }}" as="c" hint-placeholder-count="4">
+              <div onPointerDown="{{ c.onDown }}" style="touch-action:none;cursor:grab;min-height:76px;min-width:150px;padding:10px 26px;display:flex;align-items:center;justify-content:center;border-radius:22px;background:#F28C28;color:#FFFFFF;font-family:'Fredoka',sans-serif;font-weight:600;font-size:30px;box-shadow:{{ c.shadow }};transform:{{ c.tf }};transition:{{ c.tr }};opacity:{{ c.op }};visibility:{{ c.vis }};pointer-events:{{ c.pe }};position:relative;z-index:{{ c.z }};animation:{{ c.anim }}">{{ c.text }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ g_food }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,6vw,80px);max-width:760px;margin:0 auto">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ foodImgs }}" as="f" hint-placeholder-count="4">
+              <button onClick="{{ f.onClick }}" style="position:relative;min-height:110px;border-radius:28px;cursor:pointer;font-size:70px;line-height:1;background:{{ f.bg }};border:5px solid {{ f.border }};transform:{{ f.tf }};transition:transform .15s;animation:{{ f.anim }}">{{ f.emoji }}<span style="position:absolute;right:12px;top:8px;font-size:30px">{{ f.check }}</span></button>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ foodWords }}" as="w" hint-placeholder-count="4">
+              <button onClick="{{ w.onClick }}" style="position:relative;min-height:110px;border-radius:28px;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(24px,3.6vw,34px);background:{{ w.bg }};border:5px solid {{ w.border }};transform:{{ w.tf }};transition:transform .15s;animation:{{ w.anim }}">{{ w.text }}<span style="position:absolute;right:12px;top:8px;font-size:30px">{{ w.check }}</span></button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ g_memory }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,2vw,18px);max-width:640px;margin:0 auto">
+          <sc-for list="{{ memCards }}" as="m" hint-placeholder-count="12">
+            <button onClick="{{ m.onClick }}" style="aspect-ratio:1;border:none;padding:0;background:transparent;cursor:pointer;perspective:800px">
+              <div style="position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s;transform:{{ m.tf }}">
+                <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;background:#8E6CD8;border:5px solid #FFFFFF;box-shadow:0 5px 0 #6A4BB0;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,7vw,56px)">🌿</div>
+                <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);border-radius:22px;background:{{ m.faceBg }};border:5px solid {{ m.faceBorder }};display:flex;align-items:center;justify-content:center;font-size:clamp(44px,9vw,72px)">{{ m.emoji }}</div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ g_enemy }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:center;gap:12px;margin-bottom:20px">
+          <sc-for list="{{ enemySlots }}" as="s" hint-placeholder-count="3">
+            <div style="width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;background:{{ s.bg }};border:4px dashed #D9478A">{{ s.emoji }}</div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px">
+          <sc-for list="{{ enemyTiles }}" as="e" hint-placeholder-count="8">
+            <button onClick="{{ e.onClick }}" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 8px;min-height:170px;border-radius:28px;cursor:pointer;background:{{ e.bg }};border:5px solid {{ e.border }};animation:{{ e.anim }};opacity:{{ e.op }}">
+              <span style="font-size:80px;line-height:1">{{ e.emoji }}</span>
+              <span style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px">{{ e.name }}</span>
+              <span style="position:absolute;top:8px;right:12px;font-size:32px">{{ e.mark }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ g_sound }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+          <div style="display:flex;gap:10px">
+            <sc-for list="{{ sndDots }}" as="d" hint-placeholder-count="5"><div style="width:24px;height:24px;border-radius:50%;background:{{ d.bg }};border:3px solid #3FA7D6"></div></sc-for>
+          </div>
+          <button onClick="{{ playSound }}" style="width:180px;height:180px;border-radius:50%;border:none;background:#3FA7D6;color:#FFFFFF;cursor:pointer;box-shadow:0 8px 0 #2A7FA6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;animation:{{ playAnim }}">
+            <span style="font-size:80px;line-height:1">🔊</span>
+            <span style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px">Anhören</span>
+          </button>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;width:100%">
+            <sc-for list="{{ sndChoices }}" as="a" hint-placeholder-count="5">
+              <button onClick="{{ a.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 8px;min-height:160px;border-radius:28px;cursor:pointer;background:{{ a.bg }};border:5px solid {{ a.border }};animation:{{ a.anim }}">
+                <span style="font-size:76px;line-height:1">{{ a.emoji }}</span>
+                <span style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px">{{ a.name }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="font-size:14px;line-height:1.5;color:#7A6552;max-width:760px;text-align:center">Tonaufnahmen von Wikimedia Commons (gekürzt): Uhu – Mirko Tomasi (xeno-canto XC461330), CC BY-SA 4.0 · Buntspecht – Vladimir Yu. Arkhipov, CC BY-SA 3.0 · Seefrosch – Llivermore, CC BY-SA 4.0 · Junger Igel – Calle Eklund/V-wolf, CC BY-SA 3.0</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ g_puzzle }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:26px">
+          <div style="position:relative;width:100%;max-width:640px;aspect-ratio:400/260;border-radius:20px;overflow:hidden;background:#FFFFFF;border:5px solid #FFC93C">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;opacity:.2"><use href="#szene"></use></svg>
+            <div style="position:absolute;inset:0;display:grid;grid-template-columns:{{ pzCols }};grid-template-rows:{{ pzRows }}">
+              <sc-for list="{{ pzSlots }}" as="s" hint-placeholder-count="6">
+                <div data-drop="{{ s.key }}" onClick="{{ s.onClick }}" style="position:relative;outline:3px dashed {{ s.outline }};outline-offset:-3px;cursor:pointer;animation:{{ s.anim }}">
+                  <sc-if value="{{ s.filled }}" hint-placeholder-val="{{ false }}">
+                    <svg viewBox="{{ s.vb }}" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block;animation:popIn .3s"><use href="#szene"></use></svg>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;min-height:120px">
+            <sc-for list="{{ pzTray }}" as="p" hint-placeholder-count="6">
+              <div onPointerDown="{{ p.onDown }}" style="touch-action:none;cursor:grab;width:{{ p.w }};aspect-ratio:{{ p.ar }};border-radius:12px;overflow:hidden;border:4px solid {{ p.border }};background:#FFFFFF;box-shadow:{{ p.shadow }};transform:{{ p.tf }};transition:{{ p.tr }};pointer-events:{{ p.pe }};position:relative;z-index:{{ p.z }};animation:{{ p.anim }}">
+                <svg viewBox="{{ p.vb }}" preserveAspectRatio="none" style="width:100%;height:100%;display:block;pointer-events:none"><use href="#szene"></use></svg>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{ celebrating }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(59,42,30,.45);display:flex;align-items:center;justify-content:center;padding:20px">
+      {{ fireworks }}
+      <div style="position:relative;background:#FFFFFF;border-radius:40px;padding:34px 30px;max-width:520px;width:100%;text-align:center;border:6px solid #FFC93C;animation:popIn .45s;display:flex;flex-direction:column;align-items:center;gap:14px">
+        <div style="font-size:110px;line-height:1;animation:bob 1.6s ease-in-out infinite">😄</div>
+        <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:46px;color:#5BAA4A">Super gemacht!</div>
+        <div style="font-size:28px">Du bekommst einen Stern. ⭐</div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:10px">
+          <button onClick="{{ playAgain }}" style="min-height:70px;padding:10px 26px;border-radius:999px;border:none;background:#F28C28;color:#FFFFFF;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;cursor:pointer;box-shadow:0 5px 0 #C86A12">🔁 Nochmal</button>
+          <button onClick="{{ backToMenu }}" style="min-height:70px;padding:10px 26px;border-radius:999px;border:none;background:#3FA7D6;color:#FFFFFF;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;cursor:pointer;box-shadow:0 5px 0 #2A7FA6">🎲 Andere Spiele</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  {{ toastEl }}
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;puzzlePieces&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[4,6,9],&quot;default&quot;:6,&quot;tsType&quot;:&quot;4|6|9&quot;,&quot;section&quot;:&quot;Spiele&quot;},&quot;soundEffects&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spiele&quot;}}">
+const TOPICS = [
+  { id:'body', title:'Körperbau', icon:'🦔', color:'#E07A1F', shadow:'#B85F12', bg:'#FFEBD6', rows:[
+    ['🦔','Der Igel ist klein und rund.'],
+    ['📌','Er hat ganz viele Stacheln. Die Stacheln schützen ihn.'],
+    ['👃','Er hat eine spitze Schnauze. Er kann sehr gut riechen.'],
+    ['👀','Er hat kleine Augen.'],
+    ['🐾','Er hat vier kurze Beine mit Pfoten.'] ]},
+  { id:'food', title:'Nahrung', icon:'🐛', color:'#4E9A3E', shadow:'#367A2A', bg:'#E3F4DC', rows:[
+    ['🐛 🪲','Der Igel frisst Raupen und Käfer.'],
+    ['🪱 🐌','Er frisst auch Würmer und Schnecken.'],
+    ['🌙','Er sucht sein Futter in der Nacht.'],
+    ['💧','Er trinkt Wasser.'],
+    ['🥛 🚫','Milch macht den Igel krank!'] ]},
+  { id:'enemy', title:'Feinde', icon:'🦊', color:'#D13F7E', shadow:'#A32A5E', bg:'#FCE3EE', rows:[
+    ['🦉','Der Uhu jagt den Igel.'],
+    ['🦊 🦡','Auch der Fuchs und der Dachs sind Feinde.'],
+    ['🚗','Autos sind sehr gefährlich für Igel.'],
+    ['⚽','Bei Gefahr rollt sich der Igel zu einer Kugel.'] ]},
+  { id:'baby', title:'Fortpflanzung', icon:'🍼', color:'#2F8FC2', shadow:'#1F6E99', bg:'#DDF0FA', rows:[
+    ['☀️','Im Sommer bekommt die Igel-Mama Babys.'],
+    ['🦔🦔🦔','Sie bekommt etwa fünf Babys.'],
+    ['🤍','Die Stacheln der Babys sind am Anfang weiß und weich.'],
+    ['🍼','Die Babys trinken Milch bei der Mama.'],
+    ['🌳','Bald suchen sie allein Futter.'] ]}
+];
+const GAMES = [
+  { id:'body', icon:'🦔', title:'Igel-Körper', desc:'Zieh die Wörter an die richtige Stelle.', task:'Zieh jedes Wort an die richtige Stelle am Igel. Du kannst auch zuerst das Wort und dann das Fragezeichen antippen.', color:'#F28C28', shadow:'#C86A12', bg:'#FFEBD6', fg:'#B85F12' },
+  { id:'food', icon:'🐛', title:'Futter finden', desc:'Welches Wort passt zum Bild?', task:'Tippe ein Bild an. Dann tippe das passende Wort an.', color:'#5BAA4A', shadow:'#3E8A2F', bg:'#E3F4DC', fg:'#367A2A' },
+  { id:'memory', icon:'🃏', title:'Memory', desc:'Finde die gleichen Bilder.', task:'Dreh zwei Karten um. Finde immer zwei gleiche Bilder.', color:'#8E6CD8', shadow:'#6A4BB0', bg:'#EEE7FB', fg:'#6A4BB0' },
+  { id:'enemy', icon:'🦊', title:'Feinde finden', desc:'Wer ist gefährlich für den Igel?', task:'Tippe alle Tiere an, die Feinde vom Igel sind. Es sind drei Tiere.', color:'#D9478A', shadow:'#A32A5E', bg:'#FCE3EE', fg:'#A32A5E' },
+  { id:'sound', icon:'👂', title:'Wald-Geräusche', desc:'Wer macht dieses Geräusch?', task:'Drück auf Anhören. Welches Tier macht dieses Geräusch? Tippe es an.', color:'#3FA7D6', shadow:'#2A7FA6', bg:'#DDF0FA', fg:'#1F6E99' },
+  { id:'puzzle', icon:'🧩', title:'Igel-Puzzle', desc:'Setze den Igel zusammen.', task:'Zieh die Teile an die richtige Stelle. Du kannst auch zuerst ein Teil und dann ein Feld antippen.', color:'#E9B21C', shadow:'#B88A0C', bg:'#FFF3CC', fg:'#9A7208' }
+];
+const ZONES = [
+  { id:'stacheln', text:'Stacheln', x:40, y:24 },
+  { id:'auge', text:'Auge', x:77, y:60 },
+  { id:'schnauze', text:'Schnauze', x:91, y:76 },
+  { id:'pfoten', text:'Pfoten', x:30, y:94 }
+];
+const FOOD = [
+  { id:'raupe', emoji:'🐛', text:'Raupe' },
+  { id:'schnecke', emoji:'🐌', text:'Schnecke' },
+  { id:'wurm', emoji:'🪱', text:'Wurm' },
+  { id:'kaefer', emoji:'🪲', text:'Käfer' }
+];
+const PAIR_COLORS = [['#FFE08A','#E9B21C'],['#CDEFC2','#5BAA4A'],['#D6E9FB','#3FA7D6'],['#F6D3E4','#D9478A']];
+const MEM = ['🦔','🍂','🍄','🐛','🍎','🐌'];
+const ANIMALS = [
+  { id:'uhu', emoji:'🦉', name:'Uhu', enemy:true },
+  { id:'fuchs', emoji:'🦊', name:'Fuchs', enemy:true },
+  { id:'dachs', emoji:'🦡', name:'Dachs', enemy:true },
+  { id:'eich', emoji:'🐿️', name:'Eichhörnchen', enemy:false },
+  { id:'falter', emoji:'🦋', name:'Schmetterling', enemy:false },
+  { id:'hase', emoji:'🐰', name:'Hase', enemy:false },
+  { id:'reh', emoji:'🦌', name:'Reh', enemy:false },
+  { id:'maus', emoji:'🐭', name:'Maus', enemy:false }
+];
+const SOUNDS = [
+  { id:'uhu', emoji:'🦉', name:'Uhu' },
+  { id:'specht', emoji:'🐦', name:'Specht' },
+  { id:'frosch', emoji:'🐸', name:'Frosch' },
+  { id:'igel', emoji:'🦔', name:'Igel' }
+];
+const GOOD = ['Richtig!','Super!','Toll!','Prima!','Klasse!'];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+class Component extends DCLogic {
+  state = { tab:'info', topic:0, game:null, done:{}, sel:null, drag:null, wrong:null, toast:null, celebrate:null,
+    body:{ placed:{}, order:[] }, food:{ imgs:[], words:[], selImg:null, selWord:null, matched:{} },
+    mem:{ cards:[], open:[], matched:{}, lock:false }, en:{ order:[], found:{} },
+    snd:{ order:[], round:0, solved:false }, pz:{ placed:{}, tray:[], n:6 }, playing:false };
+
+  componentDidMount() {
+    this._mv = e => {
+      const d = this._ds; if (!d) return;
+      const dx = e.clientX - d.x, dy = e.clientY - d.y;
+      if (!d.moved && Math.hypot(dx, dy) > 8) d.moved = true;
+      if (d.moved) this.setState({ drag:{ kind:d.kind, id:d.id, dx, dy } });
+    };
+    this._up = e => {
+      const d = this._ds; if (!d) return; this._ds = null;
+      if (!d.moved) { this.setState({ drag:null }); this.tapItem(d.kind, d.id); return; }
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const z = el && el.closest('[data-drop]');
+      this.setState({ drag:null });
+      if (z) this.drop(d.kind, d.id, z.getAttribute('data-drop'));
+    };
+    this._cancel = () => { this._ds = null; this.setState({ drag:null }); };
+    window.addEventListener('pointermove', this._mv);
+    window.addEventListener('pointerup', this._up);
+    window.addEventListener('pointercancel', this._cancel);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('pointermove', this._mv);
+    window.removeEventListener('pointerup', this._up);
+    window.removeEventListener('pointercancel', this._cancel);
+    clearTimeout(this._tt);
+  }
+  componentDidUpdate(pp) {
+    if (pp.puzzlePieces !== this.props.puzzlePieces && this.state.game === 'puzzle') this.resetGame('puzzle');
+  }
+
+  // ---------- audio ----------
+  ac() {
+    try {
+      if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)();
+      if (this._ac.state === 'suspended') this._ac.resume();
+    } catch (e) {}
+    return this._ac;
+  }
+  osc(t, dur, f1, f2, type, vol, fType, fFreq) {
+    const a = this.ac(); if (!a) return;
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(f1, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + Math.min(0.04, dur / 3));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    let node = o;
+    if (fType) { const f = a.createBiquadFilter(); f.type = fType; f.frequency.value = fFreq; o.connect(f); node = f; }
+    node.connect(g); g.connect(a.destination);
+    o.start(t); o.stop(t + dur + 0.05);
+    return { o, g };
+  }
+  noise(t, dur, freq, q, vol, type) {
+    const a = this.ac(); if (!a) return;
+    const len = Math.max(1, Math.floor(a.sampleRate * dur));
+    const b = a.createBuffer(1, len, a.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    const s = a.createBufferSource(); s.buffer = b;
+    const f = a.createBiquadFilter(); f.type = type || 'bandpass'; f.frequency.value = freq; f.Q.value = q;
+    const g = a.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    s.connect(f); f.connect(g); g.connect(a.destination); s.start(t); s.stop(t + dur);
+  }
+  sfxOn() { return this.props.soundEffects ?? true; }
+  sfx(kind) {
+    if (!this.sfxOn()) return;
+    const a = this.ac(); if (!a) return; const t = a.currentTime + 0.02;
+    if (kind === 'ok') { this.osc(t, .15, 660, 0, 'triangle', .25); this.osc(t + .12, .25, 990, 0, 'triangle', .25); }
+    else if (kind === 'bad') { this.osc(t, .3, 280, 190, 'triangle', .25); }
+    else if (kind === 'tap') { this.osc(t, .08, 520, 0, 'sine', .15); }
+    else if (kind === 'win') { [523, 659, 784, 1047].forEach((f, i) => this.osc(t + i * .14, .35, f, 0, 'triangle', .25)); this.osc(t + .56, .6, 1047, 0, 'sine', .15); }
+  }
+  animalSound(id) {
+    try {
+      if (this._au) { this._au.pause(); this._au.currentTime = 0; }
+      this._au = new Audio((window.__resources && window.__resources['snd_' + id]) || ('sounds/' + id + '.wav'));
+      this._au.play().catch(() => {});
+    } catch (e) {}
+  }
+  animalSoundSynth(id) {
+    const a = this.ac(); if (!a) return; const t = a.currentTime + 0.05;
+    if (id === 'uhu') { this.osc(t, .45, 330, 300, 'sine', .55); this.osc(t + .65, .9, 320, 265, 'sine', .55); this.osc(t + 1.9, .45, 330, 300, 'sine', .5); this.osc(t + 2.5, .9, 320, 265, 'sine', .5); }
+    else if (id === 'specht') { [0, 1.1].forEach(r => { for (let i = 0; i < 13; i++) this.noise(t + r + i * .055, .035, 2000, 4, .9); }); }
+    else if (id === 'frosch') {
+      [0, .45, 1.2, 1.65].forEach(k => {
+        const n = this.osc(t + k, .32, 140, 115, 'sawtooth', .35, 'bandpass', 700);
+        if (n) { const l = a.createOscillator(), lg = a.createGain(); l.frequency.value = 28; lg.gain.value = .25; l.connect(lg); lg.connect(n.g.gain); l.start(t + k); l.stop(t + k + .35); }
+      });
+    }
+    else if (id === 'schwein') { [0, .45, .85, 1.6, 2.0].forEach(k => { this.osc(t + k, .3, 95, 70, 'sawtooth', .4, 'lowpass', 450); this.noise(t + k, .28, 350, 1, .35, 'lowpass'); }); }
+    else if (id === 'igel') { [0, .14, .25, .42, .56, .64, .85, .98, 1.1, 1.4, 1.52].forEach(k => this.noise(t + k, .07, 2800, 1.5, .55)); this.osc(t + .75, .08, 1800, 1500, 'sine', .08); this.osc(t + 1.3, .08, 1900, 1600, 'sine', .08); }
+  }
+  speak(text) {
+    try {
+      const ss = window.speechSynthesis; if (!ss) return;
+      ss.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'de-DE'; u.rate = .85; u.pitch = 1.1;
+      const v = ss.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith('de'));
+      if (v) u.voice = v;
+      ss.speak(u);
+    } catch (e) {}
+  }
+
+  // ---------- feedback ----------
+  toast(kind, text) {
+    clearTimeout(this._tt);
+    this.setState({ toast:{ kind, text, key:Date.now() } });
+    this._tt = setTimeout(() => this.setState({ toast:null }), 1900);
+  }
+  ok(text) { this.sfx('ok'); this.toast('ok', text || pick(GOOD)); }
+  bad(text, wrongKey) {
+    this.sfx('bad'); this.toast('bad', text || 'Versuch es nochmal!');
+    if (wrongKey) { this.setState({ wrong:wrongKey }); setTimeout(() => this.setState(s => s.wrong === wrongKey ? { wrong:null } : null), 500); }
+  }
+  finish(id) {
+    setTimeout(() => {
+      this.sfx('win');
+      const cols = ['#F28C28', '#FFC93C', '#5BAA4A', '#3FA7D6', '#D9478A', '#8E6CD8'];
+      const parts = [];
+      [[20, 30, 0], [78, 26, .35], [50, 18, .7], [30, 60, 1.0], [72, 62, 1.25]].forEach(([x, y, dl], b) => {
+        for (let i = 0; i < 18; i++) {
+          const ang = (i / 18) * Math.PI * 2, r = 90 + Math.random() * 70;
+          parts.push({ k:b + '-' + i, x, y, dl, c:cols[(i + b) % cols.length], dx:Math.cos(ang) * r, dy:Math.sin(ang) * r });
+        }
+      });
+      this.setState(s => ({ done:{ ...s.done, [id]:true }, celebrate:{ key:Date.now(), parts } }));
+    }, 500);
+  }
+
+  // ---------- navigation ----------
+  openGame(id) { this.ac(); this.sfx('tap'); this.resetGame(id); this.setState({ game:id, tab:'games' }); window.scrollTo(0, 0);
+    if (id === 'sound') setTimeout(() => this.playCurrent(), 600); }
+  resetGame(id) {
+    const st = { sel:null, drag:null, wrong:null, celebrate:null };
+    if (id === 'body') st.body = { placed:{}, order:shuffle(ZONES.map(z => z.id)) };
+    if (id === 'food') st.food = { imgs:shuffle(FOOD.map(f => f.id)), words:shuffle(FOOD.map(f => f.id)), selImg:null, selWord:null, matched:{} };
+    if (id === 'memory') st.mem = { cards:shuffle(MEM.concat(MEM)).map((e, i) => ({ e, i })), open:[], matched:{}, lock:false };
+    if (id === 'enemy') st.en = { order:shuffle(ANIMALS.map(a => a.id)), found:{} };
+    if (id === 'sound') st.snd = { order:shuffle(SOUNDS.map(s => s.id)), round:0, solved:false };
+    if (id === 'puzzle') { const n = Number(this.props.puzzlePieces ?? 6) || 6; let tray = shuffle([...Array(n).keys()]); if (tray.every((v, i) => v === i)) tray.reverse(); st.pz = { placed:{}, tray, n }; }
+    this.setState(st);
+  }
+
+  // ---------- drag & tap ----------
+  onDown(kind, id) { return e => { if (e.button > 0) return; this.ac(); this._ds = { kind, id, x:e.clientX, y:e.clientY, moved:false }; }; }
+  tapItem(kind, id) {
+    this.sfx('tap');
+    this.setState(s => ({ sel: s.sel && s.sel.kind === kind && s.sel.id === id ? null : { kind, id } }));
+  }
+  zoneClick(key) {
+    const s = this.state.sel;
+    if (!s || key.split(':')[0] !== s.kind) { this.toast('hint', s ? 'Tippe ein Feld an.' : (key.startsWith('pz') ? 'Tippe zuerst ein Puzzle-Teil an.' : 'Tippe zuerst ein Wort an.')); return; }
+    this.drop(s.kind, s.id, key);
+  }
+  drop(kind, id, key) {
+    const [zk, zid] = key.split(':');
+    if (zk !== kind) return;
+    this.setState({ sel:null });
+    if (kind === 'body') {
+      const b = this.state.body; if (b.placed[zid]) return;
+      if (zid === id) {
+        const placed = { ...b.placed, [id]:true };
+        this.setState({ body:{ ...b, placed } });
+        const z = ZONES.find(z => z.id === id);
+        this.ok('Richtig! ' + z.text);
+        if (Object.keys(placed).length === ZONES.length) this.finish('body');
+      } else this.bad('Das passt hier nicht.', 'body:' + id);
+    }
+    if (kind === 'pz') {
+      const p = this.state.pz, slot = Number(zid);
+      if (p.placed[slot] !== undefined) return;
+      if (slot === id) {
+        const placed = { ...p.placed, [slot]:id };
+        this.setState({ pz:{ ...p, placed, tray:p.tray.filter(t => t !== id) } });
+        this.ok();
+        if (Object.keys(placed).length === p.n) this.finish('puzzle');
+      } else this.bad('Das Teil gehört woanders hin.', 'pz:' + id);
+    }
+  }
+
+  // ---------- games ----------
+  foodClick(side, id) {
+    const f = this.state.food; if (f.matched[id]) return;
+    this.sfx('tap');
+    const nf = { ...f, [side === 'img' ? 'selImg' : 'selWord']:id };
+    if (nf.selImg && nf.selWord) {
+      if (nf.selImg === nf.selWord) {
+        const matched = { ...f.matched, [id]:Object.keys(f.matched).length };
+        this.setState({ food:{ ...nf, selImg:null, selWord:null, matched } });
+        this.ok('Richtig! ' + FOOD.find(x => x.id === id).text);
+        if (Object.keys(matched).length === FOOD.length) this.finish('food');
+      } else {
+        this.setState({ food:{ ...nf, selImg:null, selWord:null } });
+        this.bad('Das passt nicht zusammen.', 'food:' + nf.selImg + ':' + nf.selWord);
+      }
+    } else this.setState({ food:nf });
+  }
+  memClick(i) {
+    const m = this.state.mem; const c = m.cards[i];
+    if (m.lock || m.open.includes(i) || m.matched[c.e]) return;
+    this.sfx('tap');
+    const open = [...m.open, i];
+    if (open.length < 2) { this.setState({ mem:{ ...m, open } }); return; }
+    const [a, b] = open.map(k => m.cards[k]);
+    if (a.e === b.e) {
+      const matched = { ...m.matched, [a.e]:true };
+      this.setState({ mem:{ ...m, open:[], matched } });
+      this.ok();
+      if (Object.keys(matched).length === MEM.length) this.finish('memory');
+    } else {
+      this.setState({ mem:{ ...m, open, lock:true } });
+      setTimeout(() => { this.toast('hint', 'Nicht gleich. Merk dir die Bilder!'); }, 400);
+      setTimeout(() => this.setState(s => ({ mem:{ ...s.mem, open:[], lock:false } })), 1300);
+    }
+  }
+  enemyClick(id) {
+    const e = this.state.en; if (e.found[id]) return;
+    const an = ANIMALS.find(a => a.id === id);
+    if (an.enemy) {
+      const found = { ...e.found, [id]:true };
+      this.setState({ en:{ ...e, found } });
+      this.ok('Ja! Der ' + an.name + ' ist ein Feind.');
+      if (Object.keys(found).length === 3) this.finish('enemy');
+    } else {
+      const art = { eich:'Das', falter:'Der', hase:'Der', reh:'Das', maus:'Die' }[id];
+      this.bad(art + ' ' + an.name + ' tut dem Igel nichts.', 'en:' + id);
+    }
+  }
+  playCurrent() {
+    const s = this.state.snd; if (!s.order.length || s.solved) return;
+    this.animalSound(s.order[s.round]);
+    this.setState({ playing:true });
+    clearTimeout(this._pt); this._pt = setTimeout(() => this.setState({ playing:false }), 4500);
+  }
+  soundClick(id) {
+    const s = this.state.snd; if (s.solved || !s.order.length) return;
+    const cur = s.order[s.round];
+    if (id === cur) {
+      this.setState({ snd:{ ...s, solved:true } });
+      this.ok('Richtig! Der ' + SOUNDS.find(x => x.id === id).name);
+      setTimeout(() => {
+        if (s.round + 1 >= s.order.length) { this.setState({ snd:{ ...s, round:s.order.length, solved:true } }); this.finish('sound'); }
+        else { this.setState({ snd:{ ...s, round:s.round + 1, solved:false } }); setTimeout(() => this.playCurrent(), 400); }
+      }, 1300);
+    } else this.bad('Hör noch einmal genau hin!', 'snd:' + id);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const sel = st.sel, drag = st.drag;
+    const itemState = (kind, id) => {
+      const dragging = drag && drag.kind === kind && drag.id === id;
+      const selected = sel && sel.kind === kind && sel.id === id;
+      return {
+        tf: dragging ? `translate(${drag.dx}px,${drag.dy}px) scale(1.1)` : selected ? 'scale(1.1)' : 'none',
+        tr: dragging ? 'none' : 'transform .2s',
+        z: dragging ? 50 : selected ? 5 : 1,
+        pe: dragging ? 'none' : 'auto',
+        anim: st.wrong === kind + ':' + id ? 'shake .45s' : 'none',
+        selected, dragging
+      };
+    };
+    const topic = TOPICS[st.topic];
+    const topicVal = { ...topic, rows:topic.rows.map(([icon, text]) => ({ icon, text, read:() => this.speak(text) })) };
+    const gm = GAMES.find(g => g.id === st.game) || GAMES[0];
+    const doneCount = Object.keys(st.done).length;
+
+    // body
+    const bodyZones = ZONES.map(z => {
+      const placed = st.body.placed[z.id];
+      const active = sel && sel.kind === 'body';
+      return { key:'body:' + z.id, left:z.x + '%', top:z.y + '%', onClick:() => this.zoneClick('body:' + z.id),
+        content: placed ? '✓ ' + z.text : '?', fs: placed ? '24px' : '40px',
+        bg: placed ? '#5BAA4A' : 'rgba(255,255,255,.85)', fg: placed ? '#FFFFFF' : '#E07A1F',
+        borderStyle: placed ? 'solid' : 'dashed', borderColor: placed ? '#FFFFFF' : '#F28C28',
+        anim: active && !placed ? 'pulse 1.2s infinite' : 'none' };
+    });
+    const bodyChips = st.body.order.map(id => {
+      const z = ZONES.find(x => x.id === id), placed = st.body.placed[id], s = itemState('body', id);
+      return { text:z.text, onDown:this.onDown('body', id), tf:s.tf, tr:s.tr, z:s.z, pe: placed ? 'none' : s.pe, anim:s.anim,
+        vis: placed ? 'hidden' : 'visible', op: 1,
+        shadow: s.selected || s.dragging ? '0 0 0 6px #FFC93C, 0 10px 18px rgba(0,0,0,.2)' : '0 6px 0 #C86A12' };
+    });
+
+    // food
+    const f = st.food;
+    const foodItem = (side, id) => {
+      const it = FOOD.find(x => x.id === id), m = f.matched[id];
+      const selected = side === 'img' ? f.selImg === id : f.selWord === id;
+      const wrong = st.wrong && st.wrong.startsWith('food:') && st.wrong.split(':')[side === 'img' ? 1 : 2] === id;
+      const pc = m !== undefined ? PAIR_COLORS[m % 4] : null;
+      return { emoji:it.emoji, text:it.text, onClick:() => this.foodClick(side, id),
+        bg: pc ? pc[0] : selected ? '#FFF3CC' : '#FFFFFF', border: pc ? pc[1] : selected ? '#F28C28' : '#E9DCC4',
+        tf: selected ? 'scale(1.05)' : 'none', anim: wrong ? 'shake .45s' : 'none', check: pc ? '✅' : '' };
+    };
+
+    // memory
+    const m = st.mem;
+    const memCards = m.cards.map((c, i) => {
+      const up = m.open.includes(i) || m.matched[c.e];
+      return { emoji:c.e, onClick:() => this.memClick(i), tf: up ? 'rotateY(180deg)' : 'none',
+        faceBg: m.matched[c.e] ? '#E3F4DC' : '#FFFFFF', faceBorder: m.matched[c.e] ? '#5BAA4A' : '#8E6CD8' };
+    });
+
+    // enemy
+    const en = st.en, foundIds = Object.keys(en.found);
+    const enemyTiles = en.order.map(id => {
+      const a = ANIMALS.find(x => x.id === id), fd = en.found[id];
+      return { emoji:a.emoji, name:a.name, onClick:() => this.enemyClick(id),
+        bg: fd ? '#FCE3EE' : '#FFFFFF', border: fd ? '#D9478A' : '#E9DCC4', mark: fd ? '✅' : '',
+        anim: st.wrong === 'en:' + id ? 'shake .45s' : 'none', op: 1 };
+    });
+    const enemySlots = [0, 1, 2].map(i => ({ emoji: foundIds[i] ? ANIMALS.find(a => a.id === foundIds[i]).emoji : '', bg: foundIds[i] ? '#FCE3EE' : '#FFFFFF' }));
+
+    // sound
+    const sn = st.snd;
+    const sndDots = SOUNDS.map((_, i) => ({ bg: i < sn.round || (i === sn.round && sn.solved) ? '#3FA7D6' : '#FFFFFF' }));
+    const curSnd = sn.order[sn.round];
+    const sndChoices = SOUNDS.map(s => ({ emoji:s.emoji, name:s.name, onClick:() => this.soundClick(s.id),
+      bg: sn.solved && s.id === curSnd ? '#E3F4DC' : '#FFFFFF', border: sn.solved && s.id === curSnd ? '#5BAA4A' : '#E9DCC4',
+      anim: st.wrong === 'snd:' + s.id ? 'shake .45s' : 'none' }));
+
+    // puzzle
+    const pz = st.pz, n = pz.n;
+    const cols = n === 4 ? 2 : 3, rows = n === 4 ? 2 : n === 6 ? 2 : 3;
+    const pw = 400 / cols, ph = 260 / rows;
+    const vb = i => `${(i % cols) * pw} ${Math.floor(i / cols) * ph} ${pw} ${ph}`;
+    const pzActive = sel && sel.kind === 'pz';
+    const pzSlots = [...Array(n).keys()].map(i => ({ key:'pz:' + i, filled: pz.placed[i] !== undefined, vb:vb(i),
+      onClick:() => this.zoneClick('pz:' + i), outline: pz.placed[i] !== undefined ? 'transparent' : pzActive ? '#F28C28' : '#E9B21C',
+      anim: pzActive && pz.placed[i] === undefined ? 'pulse 1.2s infinite' : 'none' }));
+    const pzTray = pz.tray.map(id => {
+      const s = itemState('pz', id);
+      return { vb:vb(id), onDown:this.onDown('pz', id), w: cols === 2 ? 'clamp(130px,30vw,220px)' : 'clamp(100px,24vw,170px)', ar:`${pw}/${ph}`,
+        tf:s.tf, tr:s.tr, z:s.z, pe:s.pe, anim:s.anim, border: s.selected || s.dragging ? '#F28C28' : '#E9DCC4',
+        shadow: s.selected || s.dragging ? '0 0 0 5px #FFC93C, 0 10px 18px rgba(0,0,0,.2)' : '0 5px 0 #E2CFA8' };
+    });
+
+    // overlays
+    const t = st.toast;
+    const toastEl = t ? React.createElement('div', { key:t.key, style:{ position:'fixed', left:'50%', bottom:28, transform:'translateX(-50%)', zIndex:70,
+      animation:'toastIn .35s ease-out', display:'flex', alignItems:'center', gap:14, padding:'14px 30px', borderRadius:999, pointerEvents:'none',
+      background: t.kind === 'ok' ? '#5BAA4A' : t.kind === 'bad' ? '#F28C28' : '#3FA7D6', color:'#FFFFFF', fontFamily:"'Fredoka',sans-serif", fontWeight:600,
+      fontSize:28, boxShadow:'0 8px 24px rgba(0,0,0,.2)', whiteSpace:'nowrap', maxWidth:'94vw' } },
+      React.createElement('span', { style:{ fontSize:40 } }, t.kind === 'ok' ? '😊' : t.kind === 'bad' ? '🤔' : '💡'), t.text) : null;
+    const c = st.celebrate;
+    const fireworks = c ? React.createElement('div', { key:c.key, style:{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' } },
+      c.parts.map(p => React.createElement('div', { key:p.k, style:{ position:'absolute', left:p.x + '%', top:p.y + '%', width:12, height:12, borderRadius:'50%',
+        background:p.c, opacity:0, '--dx':p.dx + 'px', '--dy':p.dy + 'px', animation:`fly 1.5s ease-out ${p.dl}s infinite` } }))) : null;
+
+    return {
+      isInfo: st.tab === 'info', isMenu: st.tab === 'games' && !st.game, inGame: st.tab === 'games' && !!st.game,
+      navInfoBg: st.tab === 'info' ? '#F28C28' : '#FFFFFF', navInfoFg: st.tab === 'info' ? '#FFFFFF' : '#3B2A1E',
+      navGamesBg: st.tab === 'games' ? '#3FA7D6' : '#FFFFFF', navGamesFg: st.tab === 'games' ? '#FFFFFF' : '#3B2A1E',
+      goInfo: () => { this.sfx('tap'); this.setState({ tab:'info', game:null, celebrate:null }); },
+      goGames: () => { this.sfx('tap'); this.setState({ tab:'games', game:null, celebrate:null }); },
+      topics: TOPICS.map((tp, i) => ({ ...tp, select:() => { this.sfx('tap'); this.setState({ topic:i }); },
+        bg: i === st.topic ? tp.color : '#FFFFFF', fg: i === st.topic ? '#FFFFFF' : tp.color, tf: i === st.topic ? 'translateY(-4px)' : 'none' })),
+      topic: topicVal, topicIsBody: topic.id === 'body',
+      bodyLabels: ZONES.map(z => ({ text:z.text, left:z.x + '%', top:z.y + '%' })),
+      readTopic: () => this.speak(topic.title + '. ' + topic.rows.map(r => r[1]).join(' ')),
+      nextLabel: st.topic < TOPICS.length - 1 ? 'Weiter ➡️' : 'Zu den Spielen 🎲',
+      nextTopic: () => { this.sfx('tap'); if (st.topic < TOPICS.length - 1) { this.setState({ topic:st.topic + 1 }); window.scrollTo(0, 0); } else this.setState({ tab:'games', game:null }); },
+      starRow: GAMES.map(g => ({ op: st.done[g.id] ? 1 : .2 })),
+      games: GAMES.map(g => ({ ...g, open:() => this.openGame(g.id), starOp: st.done[g.id] ? 1 : 0 })),
+      cur: gm, readTask: () => this.speak(gm.task),
+      backToMenu: () => { this.sfx('tap'); if (this._au) this._au.pause(); try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} this.setState({ game:null, celebrate:null, sel:null }); },
+      playAgain: () => this.resetGame(st.game) || (st.game === 'sound' && setTimeout(() => this.playCurrent(), 500)),
+      g_body: st.game === 'body', g_food: st.game === 'food', g_memory: st.game === 'memory', g_enemy: st.game === 'enemy', g_sound: st.game === 'sound', g_puzzle: st.game === 'puzzle',
+      bodyZones, bodyChips,
+      foodImgs: f.imgs.map(id => foodItem('img', id)), foodWords: f.words.map(id => foodItem('word', id)),
+      memCards, enemyTiles, enemySlots,
+      sndDots, sndChoices, playSound: () => this.playCurrent(), playAnim: st.playing ? 'pulse 1s infinite' : 'none',
+      pzCols: `repeat(${cols},1fr)`, pzRows: `repeat(${rows},1fr)`, pzSlots, pzTray,
+      celebrating: !!c, fireworks, toastEl
+    };
+  }
+}
+</script>
+</body>
+</html>
